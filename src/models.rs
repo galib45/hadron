@@ -1,7 +1,12 @@
-#![allow(dead_code)]
 use std::path::PathBuf;
 
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct Settings {
+    pub proton_path: PathBuf,
+    pub umu_path: PathBuf,
+}
+
+#[derive(Default, Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Game {
     pub name: String,
     pub cover_path: PathBuf,
@@ -9,6 +14,8 @@ pub struct Game {
     pub wine_prefix: PathBuf,
 }
 
+
+#[allow(dead_code)]
 impl Game {
     pub fn with_name(mut self, name: impl Into<String>) -> Self {
         self.name = name.into();

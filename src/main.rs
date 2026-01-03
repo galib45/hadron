@@ -7,6 +7,7 @@ mod app;
 mod pages;
 mod widgets;
 mod resources;
+mod utils;
 
 fn main() -> iced::Result {
     let window_settings = iced::window::Settings {

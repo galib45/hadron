@@ -4,6 +4,9 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+dirs = "6.0.0"
 iced = { version = "0.14.0", features = ["image", "advanced", "svg"] }
 iced_dialog = "0.14.0"
 rfd = "0.16.0"
+serde = { version = "1.0.228", features = ["derive"] }
+toml = "0.9.10"

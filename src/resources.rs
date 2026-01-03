@@ -16,3 +16,7 @@ pub static FOLDER_OPEN: LazyLock<svg::Handle> = LazyLock::new(|| {
 pub static FILE_OPEN: LazyLock<svg::Handle> = LazyLock::new(|| {
     svg::Handle::from_memory(include_bytes!("../resources/file_open.svg"))
 });
+
+pub static SETTINGS: LazyLock<svg::Handle> = LazyLock::new(|| {
+    svg::Handle::from_memory(include_bytes!("../resources/settings.svg"))
+});
