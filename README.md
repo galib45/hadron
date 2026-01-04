@@ -22,7 +22,17 @@ Hadron Launcher is a simple, open-source game launcher for Linux, designed to ma
 
 ## Getting Started
 
-To build and run Hadron, you will need to have Rust and Cargo installed on your system. If you don't have them, you can install them via `rustup`: [https://rustup.rs/](https://rustup.rs/)
+You can install Hadron Launcher directly from crates.io:
+
+```bash
+cargo install hadron-launcher
+```
+
+After installation, you can run the application from your terminal:
+
+```bash
+hadron-launcher
+```
 
 ### Prerequisites
 
