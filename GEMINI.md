@@ -9,17 +9,15 @@ Hadron Launcher is a graphical user interface (GUI) application for Linux, desig
 
 **Technology:**
 - **Language:** Rust (2024 Edition)
-- **GUI Framework:** [`iced`](https://github.com/iced-rs/iced), a cross-platform GUI library for Rust.
+- **GUI Framework:** [`slint`](https://slint-ui.com/), a declarative UI toolkit for Rust.
 - **Data Serialization:** Game metadata and settings are persisted using the TOML format.
 
 **Architecture:**
-The application follows The Elm Architecture (Model-View-Update), which is idiomatic for `iced` applications.
-- **`main.rs`**: The application entry point, responsible for setting up the main window and running the `iced` application.
-- **`app.rs`**: The core of the application. It defines the main `App` struct, the possible pages (`Page` enum), and all possible user interactions (`Message` enum). It manages the application's state, including page navigation and data persistence.
+- **`main.rs`**: The application entry point, responsible for initializing and running the Slint application.
+- **`app.rs`**: The core of the application logic, handling data loading, saving, and UI callbacks.
 - **`models.rs`**: Defines the primary data structures: `Game` (containing name, paths to the executable, cover art, and Wine prefix) and `Settings` (containing the path to Proton).
-- **`app/AppData`**: A struct that holds the list of games and settings. It includes methods to load this data from and save it to `~/.local/share/hadron-launcher/data.toml`.
-- **`pages/`**: A module containing sub-modules for each screen of the application (e.g., `home.rs`, `add_game.rs`, `settings.rs`). Each page module has its own `State`, `Message` enum for page-specific actions, and `view` function to render its UI.
-- **`widgets/`**: Contains custom, reusable UI components that are used across different pages.
+- **`utils.rs`**: A module for utility functions.
+- **`ui/`**: This directory contains the Slint UI definitions for the application, separated into components.
 
 ## 2. Building and Running
 
@@ -42,8 +40,7 @@ The project uses the standard Rust build tool, Cargo.
 
 ## 3. Development Conventions
 
-- **Modularity:** The codebase is well-structured into modules based on functionality (`pages`, `widgets`, `models`, `resources`, `utils`). This separation of concerns should be maintained.
-- **State Management:** The global application state resides in `app.rs`. When adding or modifying features, consider if the state is global (belongs in `app::AppData`) or local to a specific page (belongs in the page's own `State` struct).
-- **Messaging:** User interactions and other events are handled via the `Message` enums. Global messages that can be triggered from any page (like navigation) are in `app::Message`. Page-specific messages are defined within their respective modules and wrapped into the main `app::Message` enum.
-- **UI and Styling:** The UI is built declaratively. Reusable components are abstracted into the `widgets` module. Styling is defined directly in the code using `iced`'s styling system.
+- **Modularity:** The codebase is structured into modules based on functionality (`app`, `models`, `utils`, `ui`). This separation of concerns should be maintained.
+- **State Management:** The global application state is managed in `app.rs`.
+- **UI and Styling:** The UI is defined declaratively using the `.slint` language. The "cosmic" style is used, as defined in `build.rs`.
 - **Data Persistence:** All user data is stored in a single TOML file. Changes to the `Game` or `Settings` structs in `models.rs` must be compatible with the serialization/deserialization logic in `app.rs`.

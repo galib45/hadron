@@ -1,0 +1,111 @@
+import { AppBar, FileInput } from "components.slint";
+import { ScrollView, Button, LineEdit } from "std-widgets.slint";
+
+export struct Game {
+    name: string,
+    cover-path: string,
+    exe-path: string,
+    wineprefix: string}
+
+export component AddGamePage inherits Rectangle {
+    in-out property <Game> game;
+    callback back-clicked <=> app-bar.icon-clicked;
+    callback click-save();
+    callback choose-cover-path();
+    callback choose-exe-path();
+    callback choose-wineprefix();
+    callback name-edited <=> name-le.edited;
+    callback cover-path-edited <=> cover-path-le.edited;
+    callback exe-path-edited <=> exe-path-le.edited;
+    callback wineprefix-edited <=> wineprefix-le.edited;
+
+    VerticalLayout {
+        app-bar := AppBar {
+            title: "Add/Edit Game";
+            trailing-icon: @image-url("../resources/arrow_back_ios.svg");
+        }
+
+        ScrollView {
+            HorizontalLayout {
+                padding: 32px;
+                width: min(600px, max(300px, parent.width * 0.8));
+                VerticalLayout {
+                    padding: 16px;
+                    spacing: 16px;
+                    alignment: start;
+
+                    VerticalLayout {
+                        spacing: 6px;
+                        Text {
+                            text: "Game Name";
+                        }
+
+                        name-le := LineEdit {
+                            text: game.name;
+                        }
+                    }
+
+                    VerticalLayout {
+                        spacing: 6px;
+                        Text {
+                            text: "Cover Path";
+                        }
+
+                        cover-path-le := FileInput {
+                            path: game.cover-path;
+                            choose-file => {
+                                choose-cover-path()
+                            }
+                        }
+                    }
+
+                    VerticalLayout {
+                        spacing: 6px;
+                        Text {
+                            text: "Executable Path";
+                        }
+
+                        exe-path-le := FileInput {
+                            path: game.exe-path;
+                            choose-file => {
+                                choose-exe-path()
+                            }
+                        }
+                    }
+
+                    VerticalLayout {
+                        spacing: 6px;
+                        Text {
+                            text: "Wineprefix";
+                        }
+
+                        wineprefix-le := FileInput {
+                            path: game.wineprefix;
+                            folder: true;
+                            choose-file => {
+                                choose-wineprefix()
+                            }
+                        }
+                    }
+
+                    VerticalLayout {
+                        padding-top: 64px;
+
+                        HorizontalLayout {
+                            alignment: center;
+
+                            Button {
+                                text: "Save";
+                                width: 128px;
+                                primary: true;
+                                clicked => {
+                                    click-save()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

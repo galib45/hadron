@@ -1,0 +1,48 @@
+import { LineEdit, Button } from "std-widgets.slint";
+
+export component AppBar inherits Rectangle {
+    in-out property <string> title;
+    in-out property <image> trailing-icon;
+    callback icon-clicked();
+
+    height: 58px;
+    background: #222;
+    
+    HorizontalLayout {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        padding-left: 16px;
+        padding-right: 16px;
+        Text {
+            text: title;
+            font-size: 20px;
+            font-weight: 600;
+            vertical-alignment: center;
+            width: 80%;
+        }
+
+        Button {
+            icon: trailing-icon;
+            clicked => { icon-clicked() }
+        }
+    }
+    
+}
+
+export component FileInput {
+    in-out property <string> path;
+    in-out property <bool> folder: false;
+    callback edited <=> le.edited;
+    callback choose-file();
+
+    HorizontalLayout {
+        spacing: 4px;
+        le := LineEdit { text: path; }
+        Button {
+            icon: folder 
+                ? @image-url("../resources/folder_open.svg") 
+                : @image-url("../resources/file_open.svg");
+            clicked => { choose-file() }
+        }
+    }
+}

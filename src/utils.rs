@@ -11,7 +11,7 @@ pub fn launch_game(game: &Game, settings: &Settings) {
     Command::new(umu_run_path)
         .arg(exe_name)
         .current_dir(exe_dir)
-        .env("WINEPREFIX", game.wine_prefix.as_os_str())
+        .env("WINEPREFIX", game.wineprefix.as_os_str())
         .env("PROTONPATH", settings.proton_path.as_os_str())
         .env("GAME_NAME", game.name.as_str())
         .env("WINEDEBUG", "-all")

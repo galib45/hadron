@@ -1,0 +1,105 @@
+import { AppBar } from "components.slint";
+import { ScrollView, Button, ListView } from "std-widgets.slint";
+import { Game } from "add-game.slint";
+
+export struct GameForDisplay {
+    name: string,
+    cover: image,
+    exe-path: string,
+    wineprefix: string}
+
+component GameCard inherits Rectangle {
+    in property <image> cover;
+
+    border-width: 2px;
+    border-color: gray;
+    border-radius: 12px;
+    clip: true;
+
+    Image {
+        source: cover;
+        image-fit: fill;
+        width: parent.width;
+        height: parent.height;
+    }
+}
+
+export component HomePage inherits Rectangle {
+    in property <[Game]> games;
+    callback settings-clicked <=> app_bar.icon-clicked;
+    callback add-fab-clicked <=> add-fab.clicked;
+    pure callback load-image(string) -> image;
+    callback remove-game(int);
+    callback edit-game(int);
+    callback launch-game(int);
+
+    VerticalLayout {
+        app-bar := AppBar {
+            title: "Games";
+            trailing-icon: @image-url("../resources/settings.svg");
+        }
+
+        ScrollView {
+            // viewport-width: min(1000px, max(700px, parent.width * 0.8));
+            HorizontalLayout {
+                alignment: center;
+                padding: 32px;
+                // width: min(600px, max(300px, parent.width * 0.8));
+                VerticalLayout {
+                    spacing: 32px;
+                    for game[i] in games: HorizontalLayout {
+                        GameCard {
+                            cover: load-image(game.cover-path);
+                            width: 120px;
+                            height: 150px;
+                        }
+
+                        VerticalLayout {
+                            width: 400px;
+                            padding: 16px;
+                            alignment: center;
+                            spacing: 48px;
+                            Text {
+                                text: game.name;
+                                font-size: 16px;
+                                font-weight: 600;
+                            }
+
+                            HorizontalLayout {
+                                height: 32px;
+                                width: 50%;
+                                spacing: 12px;
+                                Button {
+                                    text: "Remove";
+                                    clicked => {
+                                        remove-game(i)
+                                    }
+                                }
+
+                                Button {
+                                    text: "Edit";
+                                    clicked => {
+                                        edit-game(i)
+                                    }
+                                }
+
+                                Button {
+                                    text: "Launch";
+                                    clicked => {
+                                        launch-game(i)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    add-fab := Button {
+        icon: @image-url("../resources/add_2.svg");
+        x: parent.width - self.width - 16px;
+        y: parent.height - self.height - 16px;
+    }
+}

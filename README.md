@@ -2,7 +2,13 @@
 
 ## Overview
 
-Quarkpad is a simple, open-source game launcher for Linux, designed to manage and launch games using Valve's Proton compatibility layer. It provides a clean graphical interface built with the `iced` framework to help users organize their game library, add new games, configure basic settings, and launch them with Proton.
+Quarkpad is a simple, open-source game launcher for Linux, designed to manage and launch games using Valve's Proton compatibility layer. It provides a clean graphical interface built with the `slint` framework to help users organize their game library, add new games, configure basic settings, and launch them with Proton.
+
+## Screenshots
+![](./screenshots/1.png)
+![](./screenshots/4.png)
+![](./screenshots/2.png)
+![](./screenshots/3.png)
 
 ## Features
 
@@ -15,7 +21,7 @@ Quarkpad is a simple, open-source game launcher for Linux, designed to manage an
 ## Technologies Used
 
 -   **Rust**: The primary programming language.
--   **Iced**: A cross-platform GUI library for Rust, utilizing The Elm Architecture (Model-View-Update).
+-   **Slint**: A declarative UI toolkit for building native user interfaces.
 -   **TOML**: Used for serializing and deserializing application data (game list and settings).
 -   **`dirs` crate**: For cross-platform discovery of user-specific directories to store application data.
 -   **`rfd` (Rust File Dialogs)**: For native file/folder selection dialogues.
@@ -64,7 +70,7 @@ Or, if you built with `--release`:
 
 ## Configuration
 
-Hadron stores its game library and settings in a file named `data.toml`. This file is located in your system's local data directory, typically at:
+Quarkpad stores its game library and settings in a file named `data.toml`. This file is located in your system's local data directory, typically at:
 
 `~/.local/share/quarkpad/data.toml`
 

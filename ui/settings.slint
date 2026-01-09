@@ -1,0 +1,81 @@
+import { LineEdit, Button, ScrollView } from "std-widgets.slint";
+import { FileInput, AppBar } from "components.slint";
+
+export struct Settings {
+    proton_path: string,
+    umu_path: string,
+}
+
+export component SettingsPage inherits Rectangle {
+    in-out property <Settings> settings;
+    callback back-clicked <=> app-bar.icon-clicked;
+    callback choose-proton-path();
+    callback choose-umu-path();
+    callback click-save();
+
+    VerticalLayout {
+        app-bar := AppBar {
+            title: "Settings";
+            trailing-icon: @image-url("../resources/arrow_back_ios.svg");
+        }
+
+        ScrollView {
+            HorizontalLayout {
+                padding: 32px;
+                width: min(600px, max(300px, parent.width * 0.8));
+                VerticalLayout {
+                    padding: 16px;
+                    spacing: 16px;
+                    alignment: start;
+
+                    VerticalLayout {
+                        spacing: 6px;
+                        Text {
+                            text: "Proton Path";
+                        }
+
+                        FileInput {
+                            path: settings.proton-path;
+                            folder: true;
+                            choose-file => {
+                                choose-proton-path()
+                            }
+                        }
+                    }
+
+                    VerticalLayout {
+                        spacing: 6px;
+                        Text {
+                            text: "Umu Path";
+                        }
+
+                        FileInput {
+                            path: settings.umu-path;
+                            folder: true;
+                            choose-file => {
+                                choose-umu-path()
+                            }
+                        }
+                    }
+
+                    VerticalLayout {
+                        padding-top: 64px;
+
+                        HorizontalLayout {
+                            alignment: center;
+
+                            Button {
+                                text: "Save";
+                                width: 128px;
+                                primary: true;
+                                clicked => {
+                                    click-save()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
